@@ -9,14 +9,18 @@ script:
   - docker run -t invincible100/react-test npm run test -- --coverage
 
 after_success:
-  - docker build -t multi-client ./client
-  - docker build -t multi-nginx ./nginx
-  - docker build -t multi-server ./server
-  - docker build -t multi-worker ./worker
+  - docker build -t invincible100/multi-client ./client
+  - docker build -t invincible100/multi-nginx ./nginx
+  - docker build -t invincible100/multi-server ./server
+  - docker build -t invincible100/multi-worker ./worker
+  - docker tag invincible100/multi-client invincible0305/multi-client:v1
+  - docker tag invincible100/multi-nginx invincible0305/multi-nginx:v1
+  - docker tag invincible100/multi-server invincible0305/multi-server:v1
+  - docker tag invincible100/worker invincible0305/multi-worker:v1
   # Login to Docker CLI
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
   # Push images to docker hub
-  - docker push invincible0305/multi-client
-  - docker push invincible0305/multi-nginx
-  - docker push invincible0305/multi-server
-  - docker push invincible0305/multi-worker
+  - docker push invincible0305/multi-client:v1
+  - docker push invincible0305/multi-nginx:v1
+  - docker push invincible0305/multi-server:v1
+  - docker push invincible0305/multi-worker:v1
